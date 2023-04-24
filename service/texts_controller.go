@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
 )
 
@@ -25,7 +26,8 @@ func TextsController(c *gin.Context) {
 
 		//	在该目录创建 uploads目录
 		//  要使用filepath获取文件路径
-		dir := filepath.Dir(exe)
+		//dir := filepath.Dir(exe)
+		dir := path.Dir(exe)
 		uploads := filepath.Join(dir, "uploads")
 		err = os.MkdirAll(uploads, os.ModePerm)
 		if err != nil {
@@ -33,7 +35,7 @@ func TextsController(c *gin.Context) {
 		}
 		//  将文本保存到文件中
 		fileName := uuid.New().String()
-		fullPath := filepath.Join("uploads", fileName+".txt")
+		fullPath := path.Join("uploads", fileName+".txt")
 		err = os.WriteFile(filepath.Join(dir, fullPath), []byte(json.Raw), 0644)
 		if err != nil {
 			log.Fatalln(err)

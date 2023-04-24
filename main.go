@@ -31,9 +31,10 @@ func main() {
 		r.StaticFS("/static", http.FS(staticFiles))
 
 		api := r.Group("/api")
-
+		// 发送文本消息
 		api.POST("/v1/texts", service.TextsController)
-
+		//获取局域网ip
+		api.GET("/v1/addresses", service.AddressesController)
 		// 静态文件不存在 渲染html
 		r.NoRoute(func(c *gin.Context) {
 			path := c.Request.URL.Path
