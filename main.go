@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"file_pipeline/service"
 	"github.com/gin-gonic/gin"
 	"io/fs"
 	"log"
@@ -28,6 +29,11 @@ func main() {
 		// fs.Sub会从f(embed.FS)中提取所有前缀为"frontend/dist"的文件,并返回一个新的FS,包含这棵子树。
 		staticFiles, _ := fs.Sub(FS, "frontend/dist")
 		r.StaticFS("/static", http.FS(staticFiles))
+
+		api := r.Group("/api")
+
+		api.POST("/v1/texts", service.TextsController)
+
 		// 静态文件不存在 渲染html
 		r.NoRoute(func(c *gin.Context) {
 			path := c.Request.URL.Path
