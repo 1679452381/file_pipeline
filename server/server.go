@@ -4,6 +4,7 @@ import (
 	"embed"
 	"file_pipeline/define"
 	"file_pipeline/server/service"
+	"file_pipeline/server/ws"
 	"github.com/gin-gonic/gin"
 	"io/fs"
 	"log"
@@ -32,11 +33,17 @@ func Run() {
 	//获取局域网ip
 	api.GET("/v1/addresses", service.AddressesController)
 	//文件下载
-	api.GET("/v1/uploads/:path", service.DownloadsController)
+	r.GET("/uploads/:path", service.DownloadsController)
 	//生成二维码
 	api.GET("/v1/qrcodes", service.QrcodesController)
 	//上传文件
 	api.POST("/v1/files", service.UploadsFileController)
+	//webscoket 传输文件
+	hub := ws.NewHub()
+	go hub.Run()
+	r.GET("/ws", func(c *gin.Context) {
+		ws.WebsocketServe(hub, c)
+	})
 	// 静态文件不存在 渲染html
 	r.NoRoute(func(c *gin.Context) {
 		path := c.Request.URL.Path
