@@ -18,6 +18,8 @@ import (
 //go:embed frontend/dist/*
 var FS embed.FS
 
+var port = "27419"
+
 func main() {
 	go func() {
 		//gin.SetMode()
@@ -35,6 +37,9 @@ func main() {
 		api.POST("/v1/texts", service.TextsController)
 		//获取局域网ip
 		api.GET("/v1/addresses", service.AddressesController)
+		//生成二维码
+		api.GET("/v1/qrcodes", service.QrcodesController)
+
 		// 静态文件不存在 渲染html
 		r.NoRoute(func(c *gin.Context) {
 			path := c.Request.URL.Path
@@ -54,12 +59,12 @@ func main() {
 			}
 		})
 
-		r.Run(":8080")
+		r.Run(":" + port)
 	}()
 
 	//打开chrome 窗口下`
 	chromePath := "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-	cmd := exec.Command(chromePath, "--app=http://localhost:8080/static/index.html")
+	cmd := exec.Command(chromePath, "--app=http://localhost:"+port+"/static/index.html")
 	cmd.Start()
 
 	//监听退出序号
