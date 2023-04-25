@@ -37,6 +37,8 @@ func main() {
 		api.POST("/v1/texts", service.TextsController)
 		//获取局域网ip
 		api.GET("/v1/addresses", service.AddressesController)
+		//文件下载
+		api.GET("/v1/uploads/:path", service.DownloadsController)
 		//生成二维码
 		api.GET("/v1/qrcodes", service.QrcodesController)
 
