@@ -18,7 +18,7 @@ import (
 //go:embed frontend/dist/*
 var FS embed.FS
 
-var port = "27419"
+var port = "27149"
 
 func main() {
 	go func() {
@@ -41,7 +41,8 @@ func main() {
 		api.GET("/v1/uploads/:path", service.DownloadsController)
 		//生成二维码
 		api.GET("/v1/qrcodes", service.QrcodesController)
-
+		//上传文件
+		api.POST("/v1/files", service.UploadsFileController)
 		// 静态文件不存在 渲染html
 		r.NoRoute(func(c *gin.Context) {
 			path := c.Request.URL.Path

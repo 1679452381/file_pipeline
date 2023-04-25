@@ -23,11 +23,10 @@ func TextsController(c *gin.Context) {
 		if err != nil {
 			log.Fatalln(err)
 		}
-
+		dir := path.Dir(exe)
 		//	在该目录创建 uploads目录
 		//  要使用filepath获取文件路径
 		//dir := filepath.Dir(exe)
-		dir := path.Dir(exe)
 		uploads := filepath.Join(dir, "uploads")
 		err = os.MkdirAll(uploads, os.ModePerm)
 		if err != nil {
