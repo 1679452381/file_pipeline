@@ -9,6 +9,7 @@ go get github.com/google/uuid
 #生成二维码
 go get -u github.com/skip2/go-qrcode/...
 go get github.com/gorilla/websocket
+go get github.com/gin-contrib/cors
 ```
 
 filepath和path都是Golang标准库path下的两个重要包,用于路径相关操作。二者之间的主要区别如下:

@@ -19,6 +19,7 @@ var FS embed.FS
 func Run() {
 	//gin.SetMode()
 	r := gin.Default()
+	r.Use()
 	//r.GET("/", func(context *gin.Context) {
 	//	context.String(200, "hello")
 	//})
