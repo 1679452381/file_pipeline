@@ -5,6 +5,7 @@ import (
 	"file_pipeline/define"
 	"file_pipeline/server/service"
 	"file_pipeline/server/ws"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"io/fs"
 	"log"
@@ -19,7 +20,7 @@ var FS embed.FS
 func Run() {
 	//gin.SetMode()
 	r := gin.Default()
-	r.Use()
+	r.Use(cors.Default())
 	//r.GET("/", func(context *gin.Context) {
 	//	context.String(200, "hello")
 	//})
